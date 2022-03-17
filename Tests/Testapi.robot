@@ -29,9 +29,11 @@ Get_apicallPass
         ${content-typevalue}=  get from dictionary  ${response.headers}  Content-Type
         should be equal  ${content-typevalue}  application/json; charset=utf-8
 
-        #Check Title as London from Response Body
-        #${the data}=    Evaluate    json.loads(${response.content})    json
-        #log to console  ${the data}
+Get value from json
+        create session  myssion  ${base_url}  disable_warnings=1
+        ${response}=  get request  myssion  data?drilldowns=State&measures=Population&year=latest
+        ${json}=  get value from json  ${response}  $.data[0].State
+        log to console  ${json}
 
 
 *** Keywords ***
